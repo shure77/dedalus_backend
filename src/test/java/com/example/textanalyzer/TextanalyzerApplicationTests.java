@@ -37,4 +37,28 @@ class TextanalyzerApplicationTests {
 		});
 	}
 
+	@Test
+	public void testAnalyzeConsonants() {
+		TextanalyzerService analyzerService = new TextanalyzerService();
+		String input = "This is a test!";
+
+		Map<String, Integer> expected = Map.of(
+				"T", 3,
+				"H", 1,
+				"S", 3
+		);
+
+		List<LetterResult> result = analyzerService.analyzeConsonants(input);
+
+		Map<String, Integer> actualResult = new HashMap<>();
+		for (LetterResult lr : result) {
+			actualResult.put(lr.letter, lr.existence);
+		}
+
+		expected.forEach((letter, expectedCount) -> {
+			assertEquals(expectedCount, actualResult.get(letter),
+					String.format("Letter %s: expected %d, got %d", letter, expectedCount, actualResult.get(letter)));
+		});
+	}
+
 }
